@@ -43,7 +43,7 @@ bot.on('message', function(source, message, type, chatter) {
 
         var chat_dir = path.join(__dirname, "chat");
 
-        createIfAbsent(chat_dir, function(fileerr) {
+        ensurePresent(chat_dir, function(fileerr) {
             if(fileerr) {
                 console.log(fileerr);
             } else {
@@ -60,7 +60,7 @@ bot.on('message', function(source, message, type, chatter) {
 bot.on('announcement', function(group, headline) {
     var announcements_dir = path.join(__dirname, "announcements");
 
-    createIfAbsent(announcements_dir, function(fileerr) {
+    ensurePresent(announcements_dir, function(fileerr) {
         if(fileerr) {
             console.log(fileerr);
         } else {
@@ -75,7 +75,7 @@ bot.on('announcement', function(group, headline) {
 
 // Create the folder at the given path if it doesn't already exist.
 // permission errors on arch linux?
-function createIfAbsent(path, callback) {
+function ensurePresent(path, callback) {
     fs.mkdir(path, function(err) {
         if(err) {
             if(err.code == 'EEXIST') {
