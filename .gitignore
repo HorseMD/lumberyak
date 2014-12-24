@@ -1,0 +1,9 @@
+*~
+
+config.js
+node_modules
+
+sentry.txt
+
+chat_*
+announcements_*

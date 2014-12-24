@@ -1,0 +1,20 @@
+{
+    "name": "loggy",
+    "version": "0.0.1",
+    "keywords": [
+        "steam", "chat", "announcement", "logger"
+    ],
+    "description": "Steam chat and announcement logger.",
+    "author": {
+        "name": "Horse M.D."
+    },
+    "main": "./logger.js",
+    "repository": {
+        "type": "git",
+        "url": "https://githib.com/horsemd/steam-logger.js"
+    },
+    "dependencies": {
+        "steam": "*"
+    },
+    "homepage": "https://github.com/horsemd/steam-logger.js"
+}
