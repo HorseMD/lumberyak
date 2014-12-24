@@ -26,5 +26,4 @@ in `config.js`.
 ##TODO
 
 * Stop storing login information in plaintext :>
-* Move chats and announcements to separate folders.
 * Perhaps further separate folders so they contain the chats of a single month
