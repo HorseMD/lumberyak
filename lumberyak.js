@@ -4,8 +4,8 @@
 
 var Steam  = require('steam');
 var fs     = require('fs');
-var config = require('./config');
 var path   = require('path');
+var config = require('./config');
 
 var bot = new Steam.SteamClient();
 bot.logOn({
@@ -74,7 +74,6 @@ bot.on('announcement', function(group, headline) {
 });
 
 // Create the folder at the given path if it doesn't already exist.
-// permission errors on arch linux?
 function ensurePresent(path, callback) {
     fs.mkdir(path, function(err) {
         if(err) {
