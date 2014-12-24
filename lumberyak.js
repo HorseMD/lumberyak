@@ -1,9 +1,11 @@
-// Basic Steam Chat (and announcement) Logger
+// Lumberyak
+// Steam Chat (and announcement) Logger
 // by Horse M.D.
 
 var Steam  = require('steam');
 var fs     = require('fs');
 var config = require('./config');
+var path   = require('path');
 
 var bot = new Steam.SteamClient();
 bot.logOn({
@@ -29,7 +31,7 @@ bot.on('sentry', function(buf) {
 });
 
 bot.on('message', function(source, message, type, chatter) {
-    if (message == 'ping') {
+    if(message == 'ping') {
         console.log("Recieved 'ping', sending 'pong'.");
         bot.sendMessage(source, 'pong', Steam.EChatEntryType.ChatMsg);
     }
@@ -39,11 +41,13 @@ bot.on('message', function(source, message, type, chatter) {
 
         console.log(console_line);
 
-        createIfAbsent("./chat/", function(fileerr) {
+        var chat_dir = path.join(__dirname, "chat");
+
+        createIfAbsent(chat_dir, function(fileerr) {
             if(fileerr) {
                 console.log(fileerr);
             } else {
-                fs.appendFile("./chat/" + source, log_line, function(err) {
+                fs.appendFile(path.join(chat_dir, source), log_line, function(err) {
                     if(err) {
                         console.log(err);
                     }
@@ -54,11 +58,13 @@ bot.on('message', function(source, message, type, chatter) {
 });
 
 bot.on('announcement', function(group, headline) {
-    createIfAbsent("./announcements/", function(fileerr) {
+    var announcements_dir = path.join(__dirname, "announcements");
+
+    createIfAbsent(announcements_dir, function(fileerr) {
         if(fileerr) {
             console.log(fileerr);
         } else {
-            fs.appendFile(group, getDateTime() + ' - ' + headline + '\n', function(err) {
+            fs.appendFile(path.join(announcements_dir, group), getDateTime() + ' - ' + headline + '\n', function(err) {
                 if(err) {
                     console.log(err);
                 }
@@ -68,12 +74,14 @@ bot.on('announcement', function(group, headline) {
 });
 
 // Create the folder at the given path if it doesn't already exist.
+// permission errors on arch linux?
 function createIfAbsent(path, callback) {
-    fs.mkdir(path, 777, function(err) {
+    fs.mkdir(path, function(err) {
         if(err) {
             if(err.code == 'EEXIST') {
                 callback(null);
             } else {
+                console.log("An error occured when trying to write to file.");
                 callback(err);
             }
         } else {

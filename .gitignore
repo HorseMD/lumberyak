@@ -1,11 +1,9 @@
 *~
+*.bak
 
 config.js
 node_modules
+
 chat
 announcements
-
 sentry.txt
-
-chat_*
-announcements_*

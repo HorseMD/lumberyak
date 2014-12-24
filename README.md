@@ -1,4 +1,4 @@
-#Loggy
+#Lumberyak
 
 Steam chat and announcement logger.
 
