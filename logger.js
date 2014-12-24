@@ -64,9 +64,10 @@ bot.on('announcement', function(group, headline) {
                 }
             });
         }
-    })
+    });
 });
 
+// Create the folder at the given path if it doesn't already exist.
 function createIfAbsent(path, callback) {
     fs.mkdir(path, 777, function(err) {
         if(err) {
