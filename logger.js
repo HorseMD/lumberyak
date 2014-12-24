@@ -54,11 +54,11 @@ bot.on('message', function(source, message, type, chatter) {
 });
 
 bot.on('announcement', function(group, headline) {
-    createIfAbsent("./announcements", function(fileerr) {
+    createIfAbsent("./announcements/", function(fileerr) {
         if(fileerr) {
             console.log(fileerr);
         } else {
-            fs.appendFile('announcements_' + group, getDateTime() + ' - ' + headline + '\n', function(err) {
+            fs.appendFile(group, getDateTime() + ' - ' + headline + '\n', function(err) {
                 if(err) {
                     console.log(err);
                 }
