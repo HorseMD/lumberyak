@@ -1,15 +1,5 @@
 // Basic Steam Chat (and announcement) Logger
 // by Horse M.D.
-//
-// Usage:
-// 1. run `npm install steam`.
-// 2.1. rename `config_default.js` to `config.js`.
-// 2.2. insert your username and password into the relevant area in config.js.
-// 3. run this file with `node logger.js`.
-// 4. copy the code Valve will have sent you via email and set it as the authcode value in `config.js`.
-// 5. run this file again.
-//
-// You should now no longer be prompted for anything when running the file.
 
 var Steam  = require('steam');
 var fs     = require('fs');
@@ -48,21 +38,48 @@ bot.on('message', function(source, message, type, chatter) {
         var console_line = bot.users[source].playerName + ": " + message; // the line written to console
 
         console.log(console_line);
-        fs.appendFile("chat_" + source, log_line, function(err) {
-            if(err) {
-                console.log(err);
+
+        createIfAbsent("./chat/", function(fileerr) {
+            if(fileerr) {
+                console.log(fileerr);
+            } else {
+                fs.appendFile("./chat/" + source, log_line, function(err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                });
             }
         });
     }
 });
 
 bot.on('announcement', function(group, headline) {
-    fs.appendFile('announcements_' + group, getDateTime() + ' - ' + headline + '\n', function(err) {
+    createIfAbsent("./announcements", function(fileerr) {
+        if(fileerr) {
+            console.log(fileerr);
+        } else {
+            fs.appendFile('announcements_' + group, getDateTime() + ' - ' + headline + '\n', function(err) {
+                if(err) {
+                    console.log(err);
+                }
+            });
+        }
+    })
+});
+
+function createIfAbsent(path, callback) {
+    fs.mkdir(path, 777, function(err) {
         if(err) {
-            console.log(err);
+            if(err.code == 'EEXIST') {
+                callback(null);
+            } else {
+                callback(err);
+            }
+        } else {
+            callback(null);
         }
     });
-});
+}
 
 // Get a pretty human-readable version of the current time and date.
 function getDateTime() {
