@@ -5,11 +5,11 @@ Steam chat and announcement logger.
 ##Chat
 
 * Saved per person by steamid, avoids making tonnes of files when your friends change names.
-* All chat logs are stored in a folder called `chats`.
+* All chat logs are saved per user in `./chats/<Steam ID>`.
 
 ##Announcements
 
-* Saved per group in `./announcements/<Group ID>`.
+* All announcements are saved per group in `./announcements/<Group ID>`.
 * Only the headline is stored
 
 ##Usage
